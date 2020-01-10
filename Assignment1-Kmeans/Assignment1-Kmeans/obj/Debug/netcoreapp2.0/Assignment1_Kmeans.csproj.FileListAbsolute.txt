@@ -1,0 +1,11 @@
+D:\School\Jaar_5\Data Science\K-Means\Assignment1-Kmeans\Assignment1-Kmeans\bin\Debug\netcoreapp2.0\Assignment1_Kmeans.deps.json
+D:\School\Jaar_5\Data Science\K-Means\Assignment1-Kmeans\Assignment1-Kmeans\bin\Debug\netcoreapp2.0\Assignment1_Kmeans.runtimeconfig.json
+D:\School\Jaar_5\Data Science\K-Means\Assignment1-Kmeans\Assignment1-Kmeans\bin\Debug\netcoreapp2.0\Assignment1_Kmeans.runtimeconfig.dev.json
+D:\School\Jaar_5\Data Science\K-Means\Assignment1-Kmeans\Assignment1-Kmeans\bin\Debug\netcoreapp2.0\Assignment1_Kmeans.dll
+D:\School\Jaar_5\Data Science\K-Means\Assignment1-Kmeans\Assignment1-Kmeans\bin\Debug\netcoreapp2.0\Assignment1_Kmeans.pdb
+D:\School\Jaar_5\Data Science\K-Means\Assignment1-Kmeans\Assignment1-Kmeans\obj\Debug\netcoreapp2.0\Assignment1_Kmeans.csprojAssemblyReference.cache
+D:\School\Jaar_5\Data Science\K-Means\Assignment1-Kmeans\Assignment1-Kmeans\obj\Debug\netcoreapp2.0\Assignment1_Kmeans.csproj.CoreCompileInputs.cache
+D:\School\Jaar_5\Data Science\K-Means\Assignment1-Kmeans\Assignment1-Kmeans\obj\Debug\netcoreapp2.0\Assignment1_Kmeans.AssemblyInfoInputs.cache
+D:\School\Jaar_5\Data Science\K-Means\Assignment1-Kmeans\Assignment1-Kmeans\obj\Debug\netcoreapp2.0\Assignment1_Kmeans.AssemblyInfo.cs
+D:\School\Jaar_5\Data Science\K-Means\Assignment1-Kmeans\Assignment1-Kmeans\obj\Debug\netcoreapp2.0\Assignment1_Kmeans.dll
+D:\School\Jaar_5\Data Science\K-Means\Assignment1-Kmeans\Assignment1-Kmeans\obj\Debug\netcoreapp2.0\Assignment1_Kmeans.pdb
