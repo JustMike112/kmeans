@@ -7,6 +7,6 @@ namespace Assignment1_Kmeans.Algorithms
 {
     interface ISimilarity
     {
-        double Calculate(Point user, Centroid centroid);
+        double Calculate(List<int> user, Centroid centroid);
     }
 }

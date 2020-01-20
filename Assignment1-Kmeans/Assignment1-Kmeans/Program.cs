@@ -42,9 +42,14 @@ namespace Assignment1_Kmeans
 
             List<Point> points = Parser.Parse(';', "wineKMC.csv");
 
-            for (int i=0; i < points.Count; i++)
+            for (int i = 0; i < points.Count; i++)
             {
-                Console.WriteLine(i + ": " + points[i].points.Count.ToString());
+                Console.WriteLine(i + ": " + points[i].customerSales.Count.ToString());
+                for (int j = 0; j < points[i].customerSales.Count; j++)
+                {
+                    Console.WriteLine(j + ": " + points[i].customerSales[j]);
+                }
+                break;
             }
             
             Console.WriteLine('x');

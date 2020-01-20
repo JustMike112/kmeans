@@ -29,30 +29,14 @@ namespace Assignment1_Kmeans.Utils
 
                     if (points.ElementAtOrDefault(lineNumber - 1) == null)
                     {
-                        points.Add(new Point());
+                        points.Add(new Point(lineNumber));
                     }
 
-                    //points[lineNumber - 1].AddPoint(column == "1" ? 1 : 0);
-                    
+                    points[lineNumber - 1].AddSales(column == "1" ? 1 : 0);
+
                     item++;
                 }
             }
-            //var result = File.ReadAllLines(path).Select(
-            //        line => line.Split(delimiter)
-            //                .Select(float.Parse).ToList())
-            //        .ToList();
-
-            // Loop through all rows and columns
-            //for (var i = 0; i < result.Count; i++)
-            //{
-            //    for (var j = 0; j < result[i].Count; j++)
-            //    {
-            //        if (vectors.ElementAtOrDefault(j) == null)
-            //            vectors.Add(new Vector());
-
-            //        vectors[j].AddPoint(result[i][j]);
-            //    }
-            //}
 
             return points;
         }

@@ -8,7 +8,7 @@ namespace Assignment1_Kmeans.Utils
     {
         public int customerID;
         public int centroid;
-        public List<int> customerSales;
+        public List<int> customerSales = new List<int>();
 
         public Point() { }
         
@@ -32,11 +32,6 @@ namespace Assignment1_Kmeans.Utils
         {
             this.centroid = centroid;
         }
-
-        public int Size()
-        {
-            return customerSales.Count;
-        }
-
+        
     }
 }

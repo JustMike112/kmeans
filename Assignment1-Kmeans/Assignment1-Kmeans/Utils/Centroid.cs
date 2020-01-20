@@ -7,7 +7,7 @@ namespace Assignment1_Kmeans.Utils
     class Centroid
     {
         private int number;
-        private Tuple<double, double> coordinates;
+        private List<double> coordinates;
         private List<Point> points = new List<Point>();
 
         public Centroid(int number)
@@ -15,14 +15,9 @@ namespace Assignment1_Kmeans.Utils
             this.number = number;
         }
 
-        public double X()
+        public List<double> Coordinates()
         {
-            return coordinates.Item1;
-        }
-
-        public double Y()
-        {
-            return coordinates.Item2;
+            return coordinates;
         }
 
         private void Initialize()
