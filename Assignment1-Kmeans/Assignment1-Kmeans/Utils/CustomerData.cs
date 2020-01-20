@@ -6,9 +6,9 @@ namespace Assignment1_Kmeans.Utils
 {
     class CustomerData
     {
-        private int customerID;
-        private int offerID;
-        private string customerName;
+        public readonly int customerID;
+        public readonly int offerID;
+        public readonly string customerName;
 
         public CustomerData(int customerID, int offerID, string customerName)
         {
