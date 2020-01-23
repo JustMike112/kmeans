@@ -9,12 +9,12 @@ namespace Assignment1_Kmeans.Algorithms
     {
         /* Euclidian formula : d(p,q) = sqrt(pow(p1-q1)+pow(pn-qn)) */
 
-        public double Calculate(List<int> user, Centroid centroid)
+        public double Calculate(List<int> user, List<double> centroid)
         {
             var total = 0.0;
 
             for (var i = 0; i < user.Count; i++)
-                total += Math.Pow(user[i] - centroid.Coordinates()[i], 2);
+                total += Math.Pow(user[i] - centroid[i], 2);
 
             return Math.Sqrt(total);
         }

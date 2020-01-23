@@ -9,8 +9,8 @@ namespace Assignment1_Kmeans.Utils
     {
         private int number;
         private Random random = new Random();
-        private List<double> coordinates = new List<double>();
-        private List<Point> points = new List<Point>();
+        public List<double> coordinates = new List<double>();
+        public List<Point> points = new List<Point>();
 
         public Centroid(int number)
         {
