@@ -41,6 +41,19 @@ namespace Assignment1_Kmeans
             //}
 
             List<Point> points = Parser.Parse(';', "wineKMC.csv");
+            Centroid c = new Centroid(1);
+
+            for (int i = 0; i < 10; i++)
+            {
+                c.AddPoint(points[i]);
+            }
+            c.CalculateCentroidPosition();
+
+            for (int i = 0; i < c.Coordinates().Count; i++)
+            {
+                Console.Write(c.Coordinates()[i] + " ");
+            }
+
 
             for (int i = 0; i < points.Count; i++)
             {
