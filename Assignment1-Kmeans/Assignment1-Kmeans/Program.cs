@@ -44,7 +44,6 @@ namespace Assignment1_Kmeans
 
             for (int i = 0; i < points.Count; i++)
             {
-                Console.WriteLine(i + ": " + points[i].customerSales.Count.ToString());
                 for (int j = 0; j < points[i].customerSales.Count; j++)
                 {
                     Console.WriteLine(j + ": " + points[i].customerSales[j]);
@@ -52,7 +51,7 @@ namespace Assignment1_Kmeans
                 break;
             }
             
-            Console.WriteLine('x');
+            Console.WriteLine(points[0].customerSales.Count);
             Console.ReadLine();
         }
     }

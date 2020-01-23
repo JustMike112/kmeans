@@ -12,13 +12,10 @@ namespace Assignment1_Kmeans.Utils
         {
             var result = File.ReadAllLines(path);
             List<Point> points = new List<Point>();
-            List<CustomerData> customerItems = new List<CustomerData>();
-            var lineNumber = 0;
             
-            foreach (var line in result)
+            foreach (var row in result)
             {
-                var x = line.Split(delimiter);
-                lineNumber++;
+                var x = row.Split(delimiter);
                 var item = 0;
                 foreach (var column in x)
                 {
@@ -28,19 +25,18 @@ namespace Assignment1_Kmeans.Utils
                         continue;
                     }
 
-                    if (points.ElementAtOrDefault(lineNumber - 1) == null)
+                    if (points.ElementAtOrDefault(item - 1) == null)
                     {
-                        points.Add(new Point(lineNumber));
+                        points.Add(new Point(item));
                     }
 
                     if (column == "1")
                     {
-                        points[lineNumber - 1].AddSales(1);
-                        customerItems.Add(new CustomerData(lineNumber, item + 1));
+                        points[item - 1].AddSales(1);
                     }
                     else
                     {
-                        points[lineNumber - 1].AddSales(0);
+                        points[item - 1].AddSales(0);
                     }
 
 
