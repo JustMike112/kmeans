@@ -63,7 +63,27 @@ namespace Assignment1_Kmeans.Algorithms
 
             for (int x = 0; x < centroids.Count; x++)
             {
-                Console.WriteLine(centroids[x].points.Count);
+                Console.WriteLine("centroid " + x + " has " + centroids[x].points.Count + " points");
+                var purchasesWithinCentroid = centroids[x].GeneratePurchases();
+                Dictionary<int, int> items = new Dictionary<int, int>();
+                for (int i = 0; i < purchasesWithinCentroid.Count; i++)
+                {
+                    if (items.ContainsKey(purchasesWithinCentroid[i].offerID))
+                    {
+                        items[purchasesWithinCentroid[i].offerID]++;
+                    } else
+                    {
+                        items.Add(purchasesWithinCentroid[i].offerID, 1);
+                    }
+                }
+                var sortedItems = items.OrderByDescending(item => item.Value);
+
+                foreach (var item in sortedItems)
+                {
+                    Console.WriteLine("item " + item.Key + " has been bought by " + item.Value + " people");
+                }
+
+                Console.WriteLine();
             }
         }
 
@@ -91,15 +111,6 @@ namespace Assignment1_Kmeans.Algorithms
                         distanceMatrix.Add(i, new Dictionary<int, double>() { { j, distance } });
                     }
                 }
-            }
-
-            foreach (var user in distanceMatrix)
-            {
-                foreach (var second in user.Value)
-                {
-                    Console.WriteLine(user.Key + "-> " + second.Key + ": " + second.Value);
-                }
-                Console.WriteLine();
             }
 
             return distanceMatrix;

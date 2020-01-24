@@ -11,6 +11,7 @@ namespace Assignment1_Kmeans.Utils
         private Random random = new Random();
         public List<double> coordinates = new List<double>();
         public List<Point> points = new List<Point>();
+        public List<CustomerData> purchases = new List<CustomerData>();
 
         public Centroid(int number)
         {
@@ -65,6 +66,22 @@ namespace Assignment1_Kmeans.Utils
             }
 
             coordinates = newPosition;
+        }
+
+        public List<CustomerData> GeneratePurchases()
+        {
+             
+            for (int i = 0; i < points.Count; i++)
+            {
+                for (int j = 0; j < points[i].customerSales.Count; j++)
+                {
+                    if (points[i].customerSales[j] == 1)
+                    {
+                        purchases.Add(new CustomerData(points[i].customerID, j + 1));
+                    }
+                }
+            }
+            return purchases;
         }
 
         public double CalculateSSE()
