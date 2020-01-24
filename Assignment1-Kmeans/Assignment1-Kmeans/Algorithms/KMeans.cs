@@ -8,7 +8,7 @@ namespace Assignment1_Kmeans.Algorithms
 {
     class KMeans
     {
-        private readonly int k = 3;
+        private readonly int k = 5;
         private readonly int iterations = 100;
 
         public KMeans() { }
@@ -64,6 +64,27 @@ namespace Assignment1_Kmeans.Algorithms
             {
                 Console.WriteLine(centroids[x].points.Count);
             }
+        }
+
+        private Dictionary<int, Dictionary<int, double>> CalculateDistanceMatrix(List<Point> points, ISimilarity similarity)
+        {
+            // create a triangle dictionary -> distance matrix
+            Dictionary<int, Dictionary<int, double>> distanceMatrix = new Dictionary<int, Dictionary<int, double>>();
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                for (int j = 0; j < points.Count; j++)
+                {
+                    if (j < i)
+                    {
+                        continue;
+                    }
+                    double distance = similarity.Calculate(points[i].customerSales, points[j].customerSales.Select(x => (double)x).ToList());
+                    distanceMatrix[i][j] = distance;
+                }
+            }
+
+            return distanceMatrix;
         }
     }
 }
