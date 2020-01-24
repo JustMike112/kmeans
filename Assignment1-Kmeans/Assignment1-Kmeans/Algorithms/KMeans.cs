@@ -17,6 +17,7 @@ namespace Assignment1_Kmeans.Algorithms
         {
             List<Centroid> centroids = new List<Centroid>();
             ISimilarity similarity = new Euclidean();
+            Dictionary<int, Dictionary<int, double>> distanceMatrix = CalculateDistanceMatrix(points, similarity);
 
             // initialize centroids
             for (int i = 0; i < k; i++)
@@ -80,8 +81,25 @@ namespace Assignment1_Kmeans.Algorithms
                         continue;
                     }
                     double distance = similarity.Calculate(points[i].customerSales, points[j].customerSales.Select(x => (double)x).ToList());
-                    distanceMatrix[i][j] = distance;
+
+                    if (distanceMatrix.ContainsKey(i))
+                    {
+                        distanceMatrix[i].Add(j, distance);
+                    }
+                    else
+                    {
+                        distanceMatrix.Add(i, new Dictionary<int, double>() { { j, distance } });
+                    }
                 }
+            }
+
+            foreach (var user in distanceMatrix)
+            {
+                foreach (var second in user.Value)
+                {
+                    Console.WriteLine(user.Key + "-> " + second.Key + ": " + second.Value);
+                }
+                Console.WriteLine();
             }
 
             return distanceMatrix;
