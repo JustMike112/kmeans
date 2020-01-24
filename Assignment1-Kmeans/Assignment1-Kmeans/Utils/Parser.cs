@@ -12,7 +12,8 @@ namespace Assignment1_Kmeans.Utils
         {
             var result = File.ReadAllLines(path);
             List<Point> points = new List<Point>();
-            
+            var linenumber = 0;
+
             foreach (var row in result)
             {
                 var x = row.Split(delimiter);
@@ -25,9 +26,10 @@ namespace Assignment1_Kmeans.Utils
                         continue;
                     }
 
-                    if (points.ElementAtOrDefault(item - 1) == null)
+                    if (linenumber == 0)
                     {
-                        points.Add(new Point(item));
+                        points.Add(new Point(item, column));
+                        continue;
                     }
 
                     if (column == "1")
@@ -42,6 +44,7 @@ namespace Assignment1_Kmeans.Utils
 
                     item++;
                 }
+                linenumber++;
             }
 
             return points;

@@ -8,6 +8,7 @@ namespace Assignment1_Kmeans.Utils
     {
         public int customerID;
         public int centroid;
+        public string name;
         public List<int> customerSales = new List<int>();
 
         public Point() { }
@@ -15,6 +16,12 @@ namespace Assignment1_Kmeans.Utils
         public Point(int customerID)
         {
             this.customerID = customerID;
+        }
+
+        public Point(int customerID, string name)
+        {
+            this.customerID = customerID;
+            this.name = name;
         }
 
         public Point(int customerID, List<int> customerSales)

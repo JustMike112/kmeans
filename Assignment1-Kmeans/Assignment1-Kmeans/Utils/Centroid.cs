@@ -77,7 +77,7 @@ namespace Assignment1_Kmeans.Utils
                 {
                     if (points[i].customerSales[j] == 1)
                     {
-                        purchases.Add(new CustomerData(points[i].customerID, j + 1));
+                        purchases.Add(new CustomerData(points[i].customerID, j + 1, points[i].name));
                     }
                 }
             }
