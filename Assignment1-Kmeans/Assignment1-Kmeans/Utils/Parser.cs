@@ -29,6 +29,7 @@ namespace Assignment1_Kmeans.Utils
                     if (linenumber == 0)
                     {
                         points.Add(new Point(item, column));
+                        item++;
                         continue;
                     }
 
