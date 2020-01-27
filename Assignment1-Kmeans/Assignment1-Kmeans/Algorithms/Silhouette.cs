@@ -8,26 +8,23 @@ namespace Assignment1_Kmeans.Algorithms
 {
     class Silhouette
     {
-        List<Point> points; 
-        ISimilarity similarity;
-
-        public Silhouette() {
-            points = Parser.Parse(';', "wineKMCWithNames.csv");
-            similarity = new Euclidean();
-        }
+        public Silhouette() { }
 
         public void Run()
         {
-            Dictionary<int, Dictionary<int, double>> distanceMatrix = CalculateDistanceMatrix();
+            List<Point> points = Parser.Parse(';', "wineKMCWithNames.csv");
+            ISimilarity similarity = new Euclidean();
+            Dictionary<int, Dictionary<int, double>> distanceMatrix = CalculateDistanceMatrix(points, similarity);
 
             for (int k = 3; k < 6; k++)
             {
                 KMeans kMeans = new KMeans(k);
-                kMeans.Main();
-                List<Centroid> centroids = kMeans.bestValues.Item1;
+                kMeans.Main(); // run kmeans with the adjusted amount of centroids
+                List<Centroid> centroids = kMeans.bestValues.Item1; // retrieve the best centroids
                 List<Tuple<int, Point>> pointsWithCentroid = new List<Tuple<int, Point>>();
-                List<int> totalPointsPerCluster = new List<int>();
+                List<int> totalPointsPerCluster = new List<int>(); // total amount of points per cluster
                 
+                // add points with their corresponding centroid number to list
                 for (int i = 0; i < centroids.Count; i++)
                 {
                     totalPointsPerCluster.Add(centroids[i].points.Count);
@@ -80,11 +77,11 @@ namespace Assignment1_Kmeans.Algorithms
                 }
 
                 silhouette /= pointsWithCentroid.Count;
-                Console.WriteLine("Silhouette for value k(" + k + "): " +silhouette);
+                Console.WriteLine("Silhouette for value k(" + k + "): " + silhouette);
             }
         }
 
-        private Dictionary<int, Dictionary<int, double>> CalculateDistanceMatrix()
+        private Dictionary<int, Dictionary<int, double>> CalculateDistanceMatrix(List<Point> points, ISimilarity similarity)
         {
             // create a triangle dictionary -> distance matrix
             Dictionary<int, Dictionary<int, double>> distanceMatrix = new Dictionary<int, Dictionary<int, double>>();
@@ -97,6 +94,7 @@ namespace Assignment1_Kmeans.Algorithms
                     {
                         continue;
                     }
+
                     double distance = similarity.Calculate(points[i].purchases, points[j].purchases.Select(x => (double)x).ToList());
 
                     if (distanceMatrix.ContainsKey(points[i].id))

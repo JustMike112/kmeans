@@ -21,14 +21,12 @@ namespace Assignment1_Kmeans.Algorithms
         public KMeans()
         {
             points = Parser.Parse(';', "wineKMCWithNames.csv");
-            distanceMatrix = CalculateDistanceMatrix();
         }
 
         public KMeans(int clusters)
         {
             k = clusters;
             points = Parser.Parse(';', "wineKMCWithNames.csv");
-            distanceMatrix = CalculateDistanceMatrix();
         }
 
         public void Main()
@@ -114,35 +112,6 @@ namespace Assignment1_Kmeans.Algorithms
             }
 
             return sse;
-        }
-
-        private Dictionary<int, Dictionary<int, double>> CalculateDistanceMatrix()
-        {
-            // create a triangle dictionary -> distance matrix
-            Dictionary<int, Dictionary<int, double>> distanceMatrix = new Dictionary<int, Dictionary<int, double>>();
-
-            for (int i = 0; i < points.Count; i++)
-            {
-                for (int j = 0; j < points.Count; j++)
-                {
-                    if (j < i)
-                    {
-                        continue;
-                    }
-                    double distance = similarity.Calculate(points[i].purchases, points[j].purchases.Select(x => (double)x).ToList());
-
-                    if (distanceMatrix.ContainsKey(i))
-                    {
-                        distanceMatrix[i].Add(j, distance);
-                    }
-                    else
-                    {
-                        distanceMatrix.Add(i, new Dictionary<int, double>() { { j, distance } });
-                    }
-                }
-            }
-
-            return distanceMatrix;
         }
 
         public void PrintResults()
