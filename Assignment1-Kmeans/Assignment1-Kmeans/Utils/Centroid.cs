@@ -2,12 +2,13 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using Assignment1_Kmeans.Algorithms;
 
 namespace Assignment1_Kmeans.Utils
 {
     class Centroid
     {
-        private int number;
+        public int number;
         private Random random = new Random();
         public List<double> coordinates = new List<double>();
         public List<Point> points = new List<Point>();
@@ -70,7 +71,6 @@ namespace Assignment1_Kmeans.Utils
 
         public List<CustomerData> GeneratePurchases()
         {
-             
             for (int i = 0; i < points.Count; i++)
             {
                 for (int j = 0; j < points[i].customerSales.Count; j++)
@@ -84,10 +84,17 @@ namespace Assignment1_Kmeans.Utils
             return purchases;
         }
 
-        public double CalculateSSE()
+        // calculate the SSE based on the points within the centroid
+        public double CalculateSSE(ISimilarity similarity)
         {
-            // calculate the SSE based on the points within the centroid
-            return 0.0;
+            double SSE = 0.0;
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                SSE += Math.Pow(similarity.Calculate(points[i].customerSales, coordinates), 2);
+            }
+
+            return SSE;
         }
 
     }

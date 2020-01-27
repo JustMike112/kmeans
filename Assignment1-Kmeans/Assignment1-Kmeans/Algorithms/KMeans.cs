@@ -10,12 +10,12 @@ namespace Assignment1_Kmeans.Algorithms
     {
         private readonly int k = 5;
         private readonly int iterations = 100;
+        public List<Centroid> centroids = new List<Centroid>();
 
         public KMeans() { }
 
         public void Main(List<Point> points)
         {
-            List<Centroid> centroids = new List<Centroid>();
             ISimilarity similarity = new Euclidean();
             Dictionary<int, Dictionary<int, double>> distanceMatrix = CalculateDistanceMatrix(points, similarity);
 
@@ -32,6 +32,13 @@ namespace Assignment1_Kmeans.Algorithms
                 for (int j = 0; j < k; j++)
                 {
                     centroids[j].ClearPointList();
+                }
+
+                // store old centroids
+                List<List<double>> oldCentroids = new List<List<double>>();
+                for (int j = 0; j < centroids.Count; j++)
+                {
+                    oldCentroids.Add(centroids[j].coordinates);
                 }
 
                 // assign points to centroid
@@ -58,6 +65,12 @@ namespace Assignment1_Kmeans.Algorithms
                 }
 
                 // check if centroids have stopped moving
+                if (HaveCentroidsStoppedMoving(oldCentroids))
+                {
+                    Console.WriteLine("Centroid positions stopped moving after " + i + " iterations");
+                    Console.WriteLine();
+                    break;
+                }
             }
 
 
@@ -85,6 +98,25 @@ namespace Assignment1_Kmeans.Algorithms
 
                 Console.WriteLine();
             }
+        }
+
+        public bool HaveCentroidsStoppedMoving(List<List<double>> oldCentroids)
+        {
+            bool stopped = false;
+
+            for (int i = 0; i < centroids.Count; i++)
+            {
+                if (centroids[i].coordinates.SequenceEqual(oldCentroids[i]))
+                {
+                    stopped = true;
+                } else
+                {
+                    stopped = false;
+                    break;
+                }
+            }
+
+            return stopped;
         }
 
         private Dictionary<int, Dictionary<int, double>> CalculateDistanceMatrix(List<Point> points, ISimilarity similarity)
