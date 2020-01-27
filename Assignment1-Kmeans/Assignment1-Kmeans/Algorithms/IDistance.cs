@@ -5,7 +5,7 @@ using Assignment1_Kmeans.Utils;
 
 namespace Assignment1_Kmeans.Algorithms
 {
-    interface ISimilarity
+    interface IDistance
     {
         double Calculate(List<int> user, List<double> centroid);
     }

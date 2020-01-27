@@ -5,7 +5,7 @@ using Assignment1_Kmeans.Utils;
 
 namespace Assignment1_Kmeans.Algorithms
 {
-    class Euclidean : ISimilarity
+    class Euclidean : IDistance
     {
         /* Euclidian formula : d(p,q) = sqrt(pow(p1-q1)+pow(pn-qn)) */
 

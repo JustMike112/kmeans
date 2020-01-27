@@ -13,10 +13,8 @@ namespace Assignment1_Kmeans.Algorithms
 
         private List<Point> points;
         private List<Centroid> centroids = new List<Centroid>();
-        public Dictionary<int, Dictionary<int, double>> distanceMatrix;
-        private ISimilarity similarity = new Euclidean();
+        private IDistance distance = new Euclidean();
         public Tuple<List<Centroid>, double> bestValues;
-        private int actualIterations;
 
         public KMeans()
         {
@@ -55,10 +53,10 @@ namespace Assignment1_Kmeans.Algorithms
                         for (int c = 0; c < centroids.Count; c++)
                         {
                             // calculate distance between point and centroid
-                            double distance = similarity.Calculate(points[p].purchases, centroids[c].Coordinates());
-                            if (distance < smallestDistance.Item1)
+                            double dist = distance.Calculate(points[p].purchases, centroids[c].Coordinates());
+                            if (dist < smallestDistance.Item1)
                             {
-                                smallestDistance = new Tuple<double, int>(distance, c);
+                                smallestDistance = new Tuple<double, int>(dist, c);
                             }
                         }
                         // assign point to closest centroid
@@ -74,7 +72,6 @@ namespace Assignment1_Kmeans.Algorithms
                     // check if centroids have stopped moving
                     if (HaveCentroidsStoppedMoving(oldCentroidsCoordinates))
                     {
-                        actualIterations = i + 1;
                         break;
                     }
                 }
@@ -108,7 +105,7 @@ namespace Assignment1_Kmeans.Algorithms
             double sse = 0.0;
             for (int i = 0; i < centroids.Count; i++)
             {
-                sse += centroids[i].CalculateSSE(similarity);
+                sse += centroids[i].CalculateSSE(distance);
             }
 
             return sse;

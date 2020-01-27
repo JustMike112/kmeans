@@ -84,13 +84,13 @@ namespace Assignment1_Kmeans.Utils
         }
 
         // calculate the SSE based on the points within the centroid
-        public double CalculateSSE(ISimilarity similarity)
+        public double CalculateSSE(IDistance distance)
         {
             double SSE = 0.0;
 
             for (int i = 0; i < points.Count; i++)
             {
-                SSE += Math.Pow(similarity.Calculate(points[i].purchases, coordinates), 2);
+                SSE += Math.Pow(distance.Calculate(points[i].purchases, coordinates), 2);
             }
 
             return SSE;

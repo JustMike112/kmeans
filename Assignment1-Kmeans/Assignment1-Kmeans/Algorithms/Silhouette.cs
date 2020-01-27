@@ -13,8 +13,8 @@ namespace Assignment1_Kmeans.Algorithms
         public void Run()
         {
             List<Point> points = Parser.Parse(';', "wineKMCWithNames.csv");
-            ISimilarity similarity = new Euclidean();
-            Dictionary<int, Dictionary<int, double>> distanceMatrix = CalculateDistanceMatrix(points, similarity);
+            IDistance distance = new Euclidean();
+            Dictionary<int, Dictionary<int, double>> distanceMatrix = CalculateDistanceMatrix(points, distance);
 
             for (int k = 3; k < 6; k++)
             {
@@ -81,7 +81,7 @@ namespace Assignment1_Kmeans.Algorithms
             }
         }
 
-        private Dictionary<int, Dictionary<int, double>> CalculateDistanceMatrix(List<Point> points, ISimilarity similarity)
+        private Dictionary<int, Dictionary<int, double>> CalculateDistanceMatrix(List<Point> points, IDistance distance)
         {
             // create a triangle dictionary -> distance matrix
             Dictionary<int, Dictionary<int, double>> distanceMatrix = new Dictionary<int, Dictionary<int, double>>();
@@ -95,15 +95,15 @@ namespace Assignment1_Kmeans.Algorithms
                         continue;
                     }
 
-                    double distance = similarity.Calculate(points[i].purchases, points[j].purchases.Select(x => (double)x).ToList());
+                    double dist = distance.Calculate(points[i].purchases, points[j].purchases.Select(x => (double)x).ToList());
 
                     if (distanceMatrix.ContainsKey(points[i].id))
                     {
-                        distanceMatrix[points[i].id].Add(points[j].id, distance);
+                        distanceMatrix[points[i].id].Add(points[j].id, dist);
                     }
                     else
                     {
-                        distanceMatrix.Add(points[i].id, new Dictionary<int, double>() { { points[j].id, distance } });
+                        distanceMatrix.Add(points[i].id, new Dictionary<int, double>() { { points[j].id, dist } });
                     }
                 }
             }
