@@ -11,43 +11,14 @@ namespace Assignment1_Kmeans
     {
         static void Main(string[] args)
         {
-            //var result2 = File.ReadAllLines("WineKMC.csv");
-            //var lineNumber = 0;
-            //foreach (var line in result2)
-            //{
-            //    var x = line.Split(";");
-            //    lineNumber++;
-            //    var item = 0;
-            //    var count = 0;
-            //    foreach (var column in x)
-            //    {
-            //        if (item == 0)
-            //        {
-            //            item++;
-            //            continue;
-            //        }
-            //        count++;
-            //        if (column == "1")
-            //        {
-            //            Console.Write(column);
-            //        } else { 
-            //            // make it 0
-            //            Console.Write("0");
-            //        }
-            //        item++;
-            //    }
-            //    Console.WriteLine();
-            //    Console.WriteLine(count);
-            //}
-            
             KMeans kMeans = new KMeans();
-            for (int i = 0; i < 200; i++)
-            {
-                kMeans.Main();
-            }
+            kMeans.Main();
             kMeans.PrintResults();
-            
 
+            Silhouette silhouette = new Silhouette();
+            silhouette.Run();
+
+            Console.SetCursorPosition(0, 0);
             Console.ReadLine();
         }
     }

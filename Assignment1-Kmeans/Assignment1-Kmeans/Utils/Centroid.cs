@@ -9,9 +9,9 @@ namespace Assignment1_Kmeans.Utils
     class Centroid
     {
         public int number;
-        private Random random = new Random();
         public List<double> coordinates = new List<double>();
         public List<Point> points = new List<Point>();
+        private Random random = new Random();
 
         public Centroid()
         {
@@ -61,7 +61,7 @@ namespace Assignment1_Kmeans.Utils
             {
                 for (int j = 0; j < newPosition.Count; j++)
                 {
-                    newPosition[j] += points[i].customerSales[j];
+                    newPosition[j] += points[i].purchases[j];
                 }
             }
             
@@ -79,11 +79,11 @@ namespace Assignment1_Kmeans.Utils
 
             for (int i = 0; i < points.Count; i++)
             {
-                for (int j = 0; j < points[i].customerSales.Count; j++)
+                for (int j = 0; j < points[i].purchases.Count; j++)
                 {
-                    if (points[i].customerSales[j] == 1)
+                    if (points[i].purchases[j] == 1)
                     {
-                        purchases.Add(new CustomerData(points[i].customerID, j + 1, points[i].name));
+                        purchases.Add(new CustomerData(points[i].id, j + 1, points[i].name));
                     }
                 }
             }
@@ -97,7 +97,7 @@ namespace Assignment1_Kmeans.Utils
 
             for (int i = 0; i < points.Count; i++)
             {
-                SSE += Math.Pow(similarity.Calculate(points[i].customerSales, coordinates), 2);
+                SSE += Math.Pow(similarity.Calculate(points[i].purchases, coordinates), 2);
             }
 
             return SSE;
