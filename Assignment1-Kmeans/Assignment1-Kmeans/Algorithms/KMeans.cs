@@ -10,36 +10,35 @@ namespace Assignment1_Kmeans.Algorithms
     {
         private readonly int k = 5;
         private readonly int iterations = 100;
-        public List<Centroid> centroids = new List<Centroid>();
+        private List<Point> points;
+        private List<Centroid> centroids = new List<Centroid>();
+        private Dictionary<int, Dictionary<int, double>> distanceMatrix;
+        private ISimilarity similarity = new Euclidean();
+        private Tuple<List<Centroid>, double> bestValues;
+        private int actualIterations;
 
-        public KMeans() { }
-
-        public void Main(List<Point> points)
+        public KMeans()
         {
-            ISimilarity similarity = new Euclidean();
-            Dictionary<int, Dictionary<int, double>> distanceMatrix = CalculateDistanceMatrix(points, similarity);
+            points = Parser.Parse(';', "wineKMCWithNames.csv");
+            distanceMatrix = CalculateDistanceMatrix();
+        }
 
+        public void Main()
+        {
             // initialize centroids
             for (int i = 0; i < k; i++)
             {
                 centroids.Add(new Centroid(i));
             }
-
+            
             // main loop
             for (int i = 0; i < iterations; i++)
             {
-                // clear point list
-                for (int j = 0; j < k; j++)
-                {
-                    centroids[j].ClearPointList();
-                }
+                // clear point list for each centroid
+                centroids.ForEach(x => x.ClearPointList());
 
                 // store old centroids
-                List<List<double>> oldCentroids = new List<List<double>>();
-                for (int j = 0; j < centroids.Count; j++)
-                {
-                    oldCentroids.Add(centroids[j].coordinates);
-                }
+                List<List<double>> oldCentroidsCoordinates = centroids.ConvertAll(x => x.coordinates);
 
                 // assign points to centroid
                 for (int p = 0; p < points.Count; p++)
@@ -65,48 +64,30 @@ namespace Assignment1_Kmeans.Algorithms
                 }
 
                 // check if centroids have stopped moving
-                if (HaveCentroidsStoppedMoving(oldCentroids))
+                if (HaveCentroidsStoppedMoving(oldCentroidsCoordinates))
                 {
-                    Console.WriteLine("Centroid positions stopped moving after " + i + " iterations");
-                    Console.WriteLine();
+                    actualIterations = i + 1;
                     break;
                 }
             }
 
-
-            for (int x = 0; x < centroids.Count; x++)
+            // store the centroids and sse (if the sse is lower)
+            double sse = SSE();
+            if (bestValues == null || sse < bestValues.Item2)
             {
-                Console.WriteLine("centroid " + x + " has " + centroids[x].points.Count + " points");
-                var purchasesWithinCentroid = centroids[x].GeneratePurchases();
-                Dictionary<int, int> items = new Dictionary<int, int>();
-                for (int i = 0; i < purchasesWithinCentroid.Count; i++)
-                {
-                    if (items.ContainsKey(purchasesWithinCentroid[i].offerID))
-                    {
-                        items[purchasesWithinCentroid[i].offerID]++;
-                    } else
-                    {
-                        items.Add(purchasesWithinCentroid[i].offerID, 1);
-                    }
-                }
-                var sortedItems = items.OrderByDescending(item => item.Value);
-
-                foreach (var item in sortedItems)
-                {
-                    Console.WriteLine("item " + item.Key + " has been bought by " + item.Value + " people");
-                }
-
-                Console.WriteLine();
+                bestValues = new Tuple<List<Centroid>, double>(centroids.ConvertAll(x => x.DeepCopy()), sse);
             }
+
+            centroids.Clear();
         }
 
-        public bool HaveCentroidsStoppedMoving(List<List<double>> oldCentroids)
+        public bool HaveCentroidsStoppedMoving(List<List<double>> oldCentroidsCoordinates)
         {
             bool stopped = false;
 
             for (int i = 0; i < centroids.Count; i++)
             {
-                if (centroids[i].coordinates.SequenceEqual(oldCentroids[i]))
+                if (centroids[i].coordinates.SequenceEqual(oldCentroidsCoordinates[i]))
                 {
                     stopped = true;
                 } else
@@ -119,7 +100,18 @@ namespace Assignment1_Kmeans.Algorithms
             return stopped;
         }
 
-        private Dictionary<int, Dictionary<int, double>> CalculateDistanceMatrix(List<Point> points, ISimilarity similarity)
+        private double SSE()
+        {
+            double sse = 0.0;
+            for (int i = 0; i < centroids.Count; i++)
+            {
+                sse += centroids[i].CalculateSSE(similarity);
+            }
+
+            return sse;
+        }
+
+        private Dictionary<int, Dictionary<int, double>> CalculateDistanceMatrix()
         {
             // create a triangle dictionary -> distance matrix
             Dictionary<int, Dictionary<int, double>> distanceMatrix = new Dictionary<int, Dictionary<int, double>>();
@@ -146,6 +138,43 @@ namespace Assignment1_Kmeans.Algorithms
             }
 
             return distanceMatrix;
+        }
+
+        public void PrintResults()
+        {
+            List<Centroid> bestCentroids = bestValues.Item1;
+            double sse = bestValues.Item2;
+
+            for (int x = 0; x < bestCentroids.Count; x++)
+            {
+                Console.WriteLine("Centroid " + (x + 1) + " has " + bestCentroids[x].points.Count + " points");
+                var purchasesWithinCentroid = bestCentroids[x].GeneratePurchases();
+                Dictionary<int, int> items = new Dictionary<int, int>();
+                for (int i = 0; i < purchasesWithinCentroid.Count; i++)
+                {
+                    if (items.ContainsKey(purchasesWithinCentroid[i].offerID))
+                    {
+                        items[purchasesWithinCentroid[i].offerID]++;
+                    }
+                    else
+                    {
+                        items.Add(purchasesWithinCentroid[i].offerID, 1);
+                    }
+                }
+                var sortedItems = items.OrderByDescending(item => item.Value);
+
+                foreach (var item in sortedItems)
+                {
+                    Console.WriteLine("offer " + item.Key + " has been bought by " + item.Value + " people");
+                }
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("Value for k: " + k);
+            Console.WriteLine("Best value for the SSE: " + sse);
+            Console.WriteLine("Centroids stopped moving after " + actualIterations + " iterations");
+            Console.WriteLine();
         }
     }
 }

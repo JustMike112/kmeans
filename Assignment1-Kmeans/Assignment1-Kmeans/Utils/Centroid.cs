@@ -12,7 +12,11 @@ namespace Assignment1_Kmeans.Utils
         private Random random = new Random();
         public List<double> coordinates = new List<double>();
         public List<Point> points = new List<Point>();
-        public List<CustomerData> purchases = new List<CustomerData>();
+
+        public Centroid()
+        {
+            Initialize();
+        }
 
         public Centroid(int number)
         {
@@ -71,6 +75,8 @@ namespace Assignment1_Kmeans.Utils
 
         public List<CustomerData> GeneratePurchases()
         {
+            List<CustomerData> purchases = new List<CustomerData>();
+
             for (int i = 0; i < points.Count; i++)
             {
                 for (int j = 0; j < points[i].customerSales.Count; j++)
@@ -95,6 +101,16 @@ namespace Assignment1_Kmeans.Utils
             }
 
             return SSE;
+        }
+
+        public Centroid DeepCopy()
+        {
+            Centroid centroid = new Centroid();
+            centroid.points = this.points;
+            centroid.coordinates = this.coordinates;
+            centroid.number = this.number;
+
+            return centroid;
         }
 
     }

@@ -39,10 +39,14 @@ namespace Assignment1_Kmeans
             //    Console.WriteLine();
             //    Console.WriteLine(count);
             //}
-
-            List<Point> points = Parser.Parse(';', "wineKMCWithNames.csv");
+            
             KMeans kMeans = new KMeans();
-            kMeans.Main(points);
+            for (int i = 0; i < 200; i++)
+            {
+                kMeans.Main();
+            }
+            kMeans.PrintResults();
+            
 
             Console.ReadLine();
         }
