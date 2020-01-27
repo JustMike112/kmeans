@@ -38,7 +38,7 @@ namespace Assignment1_Kmeans.Algorithms
                 // initialize centroids
                 for (int i = 0; i < k; i++)
                 {
-                    centroids.Add(new Centroid(i));
+                    centroids.Add(new Centroid());
                 }
 
                 // main loop

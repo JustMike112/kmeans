@@ -8,19 +8,12 @@ namespace Assignment1_Kmeans.Utils
 {
     class Centroid
     {
-        public int number;
+        private Random random = new Random();
         public List<double> coordinates = new List<double>();
         public List<Point> points = new List<Point>();
-        private Random random = new Random();
 
         public Centroid()
         {
-            Initialize();
-        }
-
-        public Centroid(int number)
-        {
-            this.number = number;
             Initialize();
         }
 
@@ -67,7 +60,7 @@ namespace Assignment1_Kmeans.Utils
             
             for (int i = 0; i < newPosition.Count; i++)
             {
-                newPosition[i] /= newPosition.Count;
+                newPosition[i] /= points.Count;
             }
 
             coordinates = newPosition;
@@ -108,7 +101,6 @@ namespace Assignment1_Kmeans.Utils
             Centroid centroid = new Centroid();
             centroid.points = this.points;
             centroid.coordinates = this.coordinates;
-            centroid.number = this.number;
 
             return centroid;
         }
